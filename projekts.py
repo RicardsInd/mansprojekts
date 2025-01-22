@@ -1,53 +1,59 @@
-# Spēle ciparu minēšana
 import random
 import time
 
-Choose = input("Izvēlies līmeni, Easy, Normal, Hard: ")
-if Choose == "Easy".lower():
-    Number = random.randint(1,10)
+def choose_level():
+    while True:
+        level = input("Izvēlies līmeni, Easy, Normal, Hard: ").lower()
+        if level == "easy":
+            return random.randint(1, 10)
+        elif level == "normal":
+            return random.randint(1, 100)
+        elif level == "hard":
+            return random.randint(1, 1000)
+        else:
+            print("Nēesi izvēlējies līmeni. Izvēlies Easy, Normal, vai Hard.")
 
-elif Choose == "Normal".lower():
-    Number = random.randint(1,100)
+def get_guesses():
+    try:
+        guess1 = int(input("Spēlētājs 1, ievadi skaitli: "))
+        guess2 = int(input("Spēlētājs 2, ievadi skaitli: "))
+        return guess1, guess2
+    except ValueError:
+        print("Lūdzu ievadi derīgus skaitļus!")
+        return get_guesses()
+
+def winner(number, guess1, guess2):
+    if guess1 == number:
+        print("Malacis, Spēlētājs 1 uzminēja skaitli!")
+        return
+    elif guess2 == number:
+        print("Malacis, Spēlētājs 2 uzminēja skaitli!")
+        return
     
-elif Choose == "Hard".lower():
-    Number = random.randint(1,1000)
-
-else:
-    print("Nēesi izvēlējies līmeni.\nEasy, Normal, Hard")
-
-Guess1 = int(input("Ievadi skaitli: "))
-if Guess1 == Number:
-    print("Malacis tu uzminēji to skaitli")
-    exit()
-
-Guess2 = int(input("Ievadi skaitli: "))
-if Guess2 == Number:
-   print("Malacis tu uzminēji to skaitli")
-   exit()
-
-win1 = abs(Guess1-Number)
-win2 = abs(Guess2-Number)
-
-print({win1},{win2})
-
-print("Neviens no jums neuzminēja skaitli.")
-time.sleep(2)
-print("Domāju kurš uzvarēja...")
-time.sleep(4)
-
-if win1>win2:
-    print(f"Spēlētājs 1. Uzvarēja!")
+    win1 = abs(guess1 - number)
+    win2 = abs(guess2 - number)
+    print(f"Spēlētājs 1 = {win1}, Spēlētājs 2 = {win2}")
     time.sleep(2)
-    print(f"Minētais cipars bija {Number}, un uzvērētājs ievadija {Guess1}")
-    
-elif win2>win1:
-    print(f"Spēlētājs 2. Uzvarēja!")
+    print("Neviens no jums neuzminēja skaitli.")
     time.sleep(2)
-    print(f"Minētais cipars bija {Number}, un uzvērētājs ievadija {Guess2}")
+    print("Domāju kurš uzvarēja...")
+    time.sleep(4)
 
-else:
-    print("Draudzība uzvarēja!")
-    print(f"Minētais cipars bija {Number}!")
+    if win1 < win2:
+        print("Spēlētājs 1 uzvarēja!")
+        print(f"Minētais cipars bija {number}, un tuvākā vērtība bija {guess1}.")
+    elif win2 < win1:
+        print("Spēlētājs 2 uzvarēja!")
+        print(f"Minētais cipars bija {number}, un tuvākā vērtība bija {guess2}.")
+    else:
+        print("Draudzība uzvarēja!")
+        print(f"Minētais cipars bija {number}.")
 
-time.sleep(5)
-print("Paldies ka spēlēji!")
+def main():
+    number = choose_level()
+    guess1, guess2 = get_guesses()
+    winner(number, guess1, guess2)
+    time.sleep(3)
+    print("Paldies ka spēlēji!")
+
+main()
