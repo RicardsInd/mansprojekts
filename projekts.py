@@ -11,16 +11,12 @@ def choose_level():
         elif level == "hard":
             return random.randint(1, 1000)
         else:
-            print("Nēesi izvēlējies līmeni. Izvēlies Easy, Normal, vai Hard.")
+            print("Nēesi izvēlējies līmeni. \nIzvēlies Easy, Normal, vai Hard.")
 
 def get_guesses():
-    try:
-        guess1 = int(input("Spēlētājs 1, ievadi skaitli: "))
-        guess2 = int(input("Spēlētājs 2, ievadi skaitli: "))
-        return guess1, guess2
-    except ValueError:
-        print("Lūdzu ievadi derīgus skaitļus!")
-        return get_guesses()
+    guess1 = int(input("Spēlētājs 1, ievadi skaitli: "))
+    guess2 = int(input("Spēlētājs 2, ievadi skaitli: "))
+    return guess1, guess2
 
 def winner(number, guess1, guess2):
     if guess1 == number:
